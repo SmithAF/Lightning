@@ -17,5 +17,5 @@
  * limitations under the License.
  */
 
-import lng from './src/lightning.mjs';
+import lng from './src/lightning.js';
 export default lng;

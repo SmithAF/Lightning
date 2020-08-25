@@ -20,149 +20,153 @@
 import license from 'rollup-plugin-license';
 import cleanup from 'rollup-plugin-cleanup';
 import { terser } from 'rollup-plugin-terser';
+import { eslint } from 'rollup-plugin-eslint';
 import babel from 'rollup-plugin-babel';
 
 const TERSER_CONFIG = {
-    keep_classnames: true,
-    keep_fnames: true,
-    sourcemap: true,
-}
+  keep_classnames: true,
+  keep_fnames: true
+};
 
 const CLEANUP_CONFIG = {
-    comments: 'none',
-    extensions: ['mjs']
-}
+  comments: 'none',
+  extensions: ['js']
+};
 
-export default [{
+const ESLINT_CONFIG = eslint({ fix: true });
+
+export default [
+  {
     /** lightning.js */
-    input: './src/lightning.mjs',
+    input: './src/lightning.js',
     plugins: [
+      ESLINT_CONFIG,
+      /* Cleanup comments */
+      cleanup(CLEANUP_CONFIG),
 
-        /* Cleanup comments */
-        cleanup(CLEANUP_CONFIG),
-
-        /* Add version number to bundle */
-        license({
-            banner: `Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning`,
-          }),
+      /* Add version number to bundle */
+      license({
+        banner: 'Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning'
+      })
     ],
     output: {
-        file: './dist/lightning.js',
-        format: 'umd',
-        name: 'lng'
+      file: './dist/lightning.js',
+      format: 'umd',
+      name: 'lng'
     }
-},
-{
+  },
+  {
     /** lightning.min.js */
-    input: './src/lightning.mjs',
+    input: './src/lightning.js',
     plugins: [
-        terser(TERSER_CONFIG),
+      ESLINT_CONFIG,
+      terser(TERSER_CONFIG),
 
-        /* Add version number to bundle */
-        license({
-            banner: `Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning`,
-        }),
+      /* Add version number to bundle */
+      license({
+        banner: 'Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning'
+      })
     ],
     output: {
-        file: './dist/lightning.min.js',
-        format: 'umd',
-        name: 'lng',
-        sourcemap: true,
+      file: './dist/lightning.min.js',
+      format: 'umd',
+      name: 'lng',
+      sourcemap: true
     }
-
-},
-{
+  },
+  {
     /** lightning.es5.js */
-    input: './src/lightning.mjs',
+    input: './src/lightning.js',
     plugins: [
+      ESLINT_CONFIG,
+      /* Cleanup comments */
+      cleanup(),
 
-        /* Cleanup comments */
-        cleanup(),
-
-        /* Add version number to bundle */
-        license({
-            banner: `Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning`,
-        }),
-        babel({
-            presets: [
-                [
-                '@babel/env',
-                {
-                    targets: {
-                        chrome: '39',
-                    },
-                    spec: true,
-                    debug: false
-                },
-                ],
-            ],
-            plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters'],
-        }),
+      /* Add version number to bundle */
+      license({
+        banner: 'Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning'
+      }),
+      babel({
+        presets: [
+          [
+            '@babel/env',
+            {
+              targets: {
+                chrome: '39'
+              },
+              spec: true,
+              debug: false
+            }
+          ]
+        ],
+        plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters']
+      })
     ],
     output: {
-        file: './dist/lightning.es5.js',
-        format: 'umd',
-        name: 'lng'
+      file: './dist/lightning.es5.js',
+      format: 'umd',
+      name: 'lng'
     }
-},
-{
+  },
+  {
     /** lightning.es5.min.js */
-    input: './src/lightning.mjs',
+    input: './src/lightning.js',
     plugins: [
-        terser(TERSER_CONFIG),
+      ESLINT_CONFIG,
+      terser(TERSER_CONFIG),
 
-        /* Add version number to bundle */
-        license({
-            banner: `Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning`,
-        }),
-        babel({
-            presets: [
-                [
-                '@babel/env',
-                {
-                    targets: {
-                        chrome: '39',
-                    },
-                    spec: true,
-                    debug: false
-                },
-                ],
-            ],
-            plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters'],
-        }),
+      /* Add version number to bundle */
+      license({
+        banner: 'Lightning v<%= pkg.version %>\n\n https://github.com/rdkcentral/Lightning'
+      }),
+      babel({
+        presets: [
+          [
+            '@babel/env',
+            {
+              targets: {
+                chrome: '39'
+              },
+              spec: true,
+              debug: false
+            }
+          ]
+        ],
+        plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters']
+      })
     ],
     output: {
-        file: './dist/lightning.es5.min.js',
-        format: 'umd',
-        name: 'lng',
-        sourcemap: true,
+      file: './dist/lightning.es5.min.js',
+      format: 'umd',
+      name: 'lng',
+      sourcemap: true
     }
-},
-{
+  },
+  {
     /** lightning-inspect.es5.js */
     input: './devtools/lightning-inspect.js',
     plugins: [
-
-        babel({
-            presets: [
-                [
-                '@babel/env',
-                {
-                    targets: {
-                        chrome: '39',
-                    },
-                    spec: true,
-                    debug: false
-                },
-                ],
-            ],
-            plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters'],
-        }),
+      ESLINT_CONFIG,
+      babel({
+        presets: [
+          [
+            '@babel/env',
+            {
+              targets: {
+                chrome: '39'
+              },
+              spec: true,
+              debug: false
+            }
+          ]
+        ],
+        plugins: ['@babel/plugin-transform-spread', '@babel/plugin-transform-parameters']
+      })
     ],
     output: {
-        file: './devtools/lightning-inspect.es5.js',
-        format: 'umd',
-        name: 'lng'
+      file: './devtools/lightning-inspect.es5.js',
+      format: 'umd',
+      name: 'lng'
     }
-},
-]
+  }
+];

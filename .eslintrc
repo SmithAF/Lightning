@@ -1,0 +1,29 @@
+{
+  "parser": "babel-eslint",
+  "extends": "standard",
+  "env": {
+    "browser": true,
+    "mocha": true
+  },
+  "rules": {
+    "template-curly-spacing": "off",
+    "indent": "off",
+    "semi": "off",
+    "eqeqeq": "off",
+    "no-var": "error",
+    "space-before-function-paren": "off",
+    "handle-callback-err": "off",
+    "standard/no-callback-literal": "off",
+    "no-new-func": "off",
+    "no-prototype-builtins": "off",
+    "no-unmodified-loop-condition": "off"
+  },
+  "globals": {
+    "lng": true,
+    "webkitURL": true,
+    "html2canvas": true
+  },
+  "plugins": [
+    "mocha"
+  ]
+}
