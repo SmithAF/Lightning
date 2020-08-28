@@ -17,14 +17,14 @@
  * limitations under the License.
  */
 
-import WebPlatform from './browser/WebPlatform.js'
+import { REDPlatform } from './browser/REDPlatform';
 
 export default class PlatformLoader {
-  static load (options) {
+  static load(options) {
     if (options.platform) {
-      return options.platform
+      return options.platform;
     } else {
-      return WebPlatform
+      return REDPlatform;
     }
   }
 }
